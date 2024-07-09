@@ -1,0 +1,76 @@
+# https://golangci-lint.run/usage/configuration/#output-configuration
+output:
+  sort-order:
+    - file
+    - linter
+  sort-results: true
+  show-stats: true
+
+# https://golangci-lint.run/usage/configuration/#linters-configuration
+linters:
+  # https://golangci-lint.run/usage/linters/
+  enable-all: true
+  disable:
+    - execinquery # deprecated
+    - gomnd # deprecated
+    - gochecknoglobals # Check that no global variables exist.
+    - wrapcheck # https://golangci-lint.run/usage/linters/#wrapcheck
+    - depguard # https://golangci-lint.run/usage/linters/#depguard
+    - exhaustruct # https://golangci-lint.run/usage/linters/#exhaustruct
+    - gci # https://golangci-lint.run/usage/linters/#gci
+    - gochecknoinits # Checks that no init functions are present in Go code.
+    - godox # https://golangci-lint.run/usage/linters/#godox
+    - mnd # https://golangci-lint.run/usage/linters/#mnd
+    - err113 # Go linter to check the errors handling expressions.
+    - ireturn # https://golangci-lint.run/usage/linters/#ireturn
+    - gomoddirectives # https://golangci-lint.run/usage/linters/#gomoddirectives
+    - tagliatelle # https://golangci-lint.run/usage/linters/#tagliatelle (We use kebab and snake for json tags, linter does not support multiple cases yet)
+    - gofumpt # https://golangci-lint.run/usage/linters/#gofumpt
+
+linters-settings:
+  # https://golangci-lint.run/usage/linters/#cyclop
+  cyclop:
+    # The maximal code complexity to report.
+    # Default: 10
+    max-complexity: 15
+  gosec:
+    # https://golangci-lint.run/usage/linters/#gosec
+    excludes:
+      - G204 # Audit use of command execution
+      - G306 # Poor file permissions used when creating a file
+  varnamelen:
+    # https://golangci-lint.run/usage/linters/#varnamelen
+    max-distance: 10
+    ignore-names:
+      - ok # used to check if a map key exists
+      - wf # used for workflow reference
+      - ch # channel names
+      - i # index
+      - fn # variable representing a function
+    ignore-decls:
+      - r interface{}
+  perfsprint:
+    # https://golangci-lint.run/usage/linters/#perfsprint
+    strconcat: false
+  nestif:
+    # https://golangci-lint.run/usage/linters/#nestif
+    min-complexity: 7
+  funlen:
+    # https://golangci-lint.run/usage/linters/#funlen
+    ignore-comments: true
+    lines: 65
+  govet:
+    enable:
+      # Disallow shadowing variables to prevent the following problems that are not caught by the Go compiler:
+      # * Having both a global and local variable with the same name can cause problems that manifest themselves after a simple refactoring moving code from one place to another.
+      # * Redeclaring `err` within a code block may result in the previous err value being ignored silently.
+      - shadow
+
+# https://golangci-lint.run/usage/configuration/#issues-configuration
+issues:
+  # exclude test files
+  exclude-files:
+    - ".*_test\\.go"
+    - "fake_.*\\.go"
+  exclude-dirs:
+    - "fake"

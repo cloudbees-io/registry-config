@@ -1,0 +1,26 @@
+{
+    "Version": "1.0",
+    "registries": [
+      {
+        "location": "docker.io/library",
+        "mirrors": [
+          "mirror1.example.com/dockerhub_lib",
+          "mirror2.example.com/dockerhub_lib"
+        ]
+      },
+      {
+        "location": "docker.io/myorg",
+        "mirrors": [
+          "mirror1.example.com/dockerhub",
+          "mirror2.example.com/dockerhub"
+        ]
+      },
+      {
+        "location": "quay.io/myorg",
+        "mirrors": [
+          "mirror1.example.com/quay",
+          "mirror2.example.com/quay"
+        ]
+      }
+    ]
+}

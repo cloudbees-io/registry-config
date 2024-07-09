@@ -1,0 +1,19 @@
+{
+    "Version": "1.0",
+    "registries": [
+      {
+        "prefix": "docker.io/myorg",
+        "mirrors": [
+          "mirror1.example.com/dockerhub",
+          "mirror2.example.com/dockerhub"
+        ]
+      },
+      {
+        "prefix": "quay.io/myorg",
+        "mirrors": [
+          "mirror1.example.com/quay",
+          "mirror2.example.com/quay"
+        ]
+      }
+    ]
+}
