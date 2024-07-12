@@ -1,0 +1,8 @@
+bin/
+cmd/*/*
+!cmd/*/*.go
+
+Makefile
+*_test.go
+testdata
+.git

@@ -1,0 +1,64 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: build
+
+on:
+  push:
+    branches:
+    - '**'
+
+permissions:
+  scm-token-own: read
+  scm-token-org: read
+  id-token: write
+
+jobs:
+  build:
+    steps:
+    - id: checkout
+      name: Get source code
+      uses: cloudbees-io/checkout@v1
+
+    - id: unit-test-scan
+      name: Unit tests and static code analysis
+      uses: calculi-corp/cb-internal-shared-actions/go-test@go-test/v1
+      with:
+        min-coverage: "83.5"
+
+    - id: lint
+      name: Lint
+      uses: docker://golang:1.22.5
+      run: |
+        go version
+        make lint
+
+    - id: aws-login
+      name: Login to AWS
+      if: ${{ vars.workflow_execution_env == 'production' }}
+      uses: cloudbees-io/configure-aws-credentials@v1
+      with:
+        aws-region: us-east-1
+        role-to-assume: ${{ vars.oidc_staging_iam_role }}
+        role-duration-seconds: "3600"
+
+    - id: ecr-login
+      name: Configure container registry for ECR
+      if: ${{ vars.workflow_execution_env == 'production' }}
+      uses: cloudbees-io/configure-ecr-credentials@v1
+
+    - id: dockerhub-login
+      name: Login to Dockerhub using CloudBees service account
+      if: ${{ vars.workflow_execution_env == 'production' }}
+      uses: cloudbees-io/configure-oci-credentials@v1
+      with:
+        registry: docker.io
+        username: ${{ secrets.e5bbc3_dockerhub_user }}
+        password: ${{ secrets.e5bbc3_dockerhub_password }}
+
+    - id: build-image
+      name: Build container image
+      if: ${{ vars.workflow_execution_env == 'production' }}
+      uses: cloudbees-io/kaniko@v1
+      with:
+        destination: ${{ vars.staging_image_registry }}/registry-config:${{ cloudbees.version }}${{ cloudbees.scm.branch == 'main' && format(',{0}/registry-config:latest', vars.staging_image_registry) || '' }}
+        build-args: VERSION=${{ cloudbees.version }}
