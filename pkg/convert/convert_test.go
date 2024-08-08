@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/calculi-corp/registry-config/pkg/registries"
+	"github.com/cloudbees-io/registry-config/pkg/registries"
 	"github.com/containers/image/v5/pkg/sysregistriesv2"
 	"github.com/stretchr/testify/require"
 )

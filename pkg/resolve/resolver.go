@@ -8,8 +8,8 @@ import (
 	"github.com/containers/image/v5/pkg/sysregistriesv2"
 	"github.com/containers/image/v5/types"
 
-	"github.com/calculi-corp/registry-config/pkg/convert"
-	"github.com/calculi-corp/registry-config/pkg/registries"
+	"github.com/cloudbees-io/registry-config/pkg/convert"
+	"github.com/cloudbees-io/registry-config/pkg/registries"
 )
 
 // Resolver resolves image references using a given registry mirror config.

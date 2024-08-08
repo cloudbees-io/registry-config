@@ -1,4 +1,4 @@
-module github.com/calculi-corp/registry-config
+module github.com/cloudbees-io/registry-config
 
 go 1.22.4
 
