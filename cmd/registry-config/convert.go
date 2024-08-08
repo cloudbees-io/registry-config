@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/calculi-corp/registry-config/pkg/convert"
-	"github.com/calculi-corp/registry-config/pkg/registries"
+	"github.com/cloudbees-io/registry-config/pkg/convert"
+	"github.com/cloudbees-io/registry-config/pkg/registries"
 )
 
 var convertCmd = &cobra.Command{

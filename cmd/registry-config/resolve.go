@@ -9,8 +9,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/calculi-corp/registry-config/pkg/registries"
-	"github.com/calculi-corp/registry-config/pkg/resolve"
+	"github.com/cloudbees-io/registry-config/pkg/registries"
+	"github.com/cloudbees-io/registry-config/pkg/resolve"
 )
 
 var resolveCmd = &cobra.Command{

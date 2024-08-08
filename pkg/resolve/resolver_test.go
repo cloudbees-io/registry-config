@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/calculi-corp/registry-config/pkg/registries"
+	"github.com/cloudbees-io/registry-config/pkg/registries"
 )
 
 func TestResolve(t *testing.T) {
