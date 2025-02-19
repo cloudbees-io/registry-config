@@ -21,14 +21,14 @@ jobs:
 
     - id: unit-test
       name: Unit tests
-      uses: docker://golang:1.22.5
+      uses: docker://golang:1.24
       run: |
         go version
         make test
 
     - id: lint
       name: Lint
-      uses: docker://golang:1.22.5
+      uses: docker://golang:1.24
       run: |
         go version
         make lint
