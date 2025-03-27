@@ -1,6 +1,6 @@
 module github.com/cloudbees-io/registry-config
 
-go 1.24
+go 1.24.1
 
 require (
 	github.com/BurntSushi/toml v1.3.2
