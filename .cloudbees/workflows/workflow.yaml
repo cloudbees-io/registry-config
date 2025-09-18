@@ -52,12 +52,12 @@ jobs:
       if: ${{ vars.workflow_execution_env == 'production' }}
       uses: cloudbees-io/kaniko@v1
       with:
-        destination: ${{ vars.staging_image_registry }}/registry-config:${{ cloudbees.version }}${{ cloudbees.scm.branch == 'main' && format(',{0}/registry-config:latest', vars.staging_image_registry) || '' }}
+        destination: 020229604682.dkr.ecr.us-east-1.amazonaws.com/actions/registry-config:${{ cloudbees.version }}${{ cloudbees.scm.branch == 'main' && format(',{0}/registry-config:latest', '020229604682.dkr.ecr.us-east-1.amazonaws.com/actions') || '' }}
         build-args: VERSION=${{ cloudbees.version }}
         registry-mirrors: 020229604682.dkr.ecr.us-east-1.amazonaws.com/docker-hub
 
     - name: Run TruffleHog Container Action
       uses: cloudbees-io/trufflehog-secret-scan-container@v1
       with:
-        image-location: ${{ vars.staging_image_registry }}/registry-config
+        image-location: 020229604682.dkr.ecr.us-east-1.amazonaws.com/actions/registry-config
         image-tag: ${{ cloudbees.version }}
