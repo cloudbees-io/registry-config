@@ -9,8 +9,6 @@ output:
 linters:
   default: all
   disable:
-    - execinquery
-    - gomnd
     - gochecknoglobals
     - wrapcheck
     - depguard
