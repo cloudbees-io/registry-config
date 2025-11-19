@@ -1,3 +1,4 @@
+// Package resolve provides image reference resolution using registry mirror configurations.
 package resolve
 
 import (
@@ -17,20 +18,6 @@ type Resolver struct {
 	config *types.SystemContext
 }
 
-// Close closes the resolver.
-func (r *Resolver) Close() error {
-	if r.config != nil {
-		err := os.Remove(r.config.SystemRegistriesConfPath)
-		if err != nil && !os.IsNotExist(err) {
-			return err
-		}
-
-		r.config = nil
-	}
-
-	return nil
-}
-
 // NewResolver creates a new image reference resolver using the provided config.
 func NewResolver(config registries.Config) (*Resolver, error) {
 	tmpRhConfFile, err := createTempRegistriesConf(config)
@@ -43,6 +30,20 @@ func NewResolver(config registries.Config) (*Resolver, error) {
 			SystemRegistriesConfPath: tmpRhConfFile,
 		},
 	}, nil
+}
+
+// Close closes the resolver.
+func (r *Resolver) Close() error {
+	if r.config != nil {
+		err := os.Remove(r.config.SystemRegistriesConfPath)
+		if err != nil && !os.IsNotExist(err) {
+			return err
+		}
+
+		r.config = nil
+	}
+
+	return nil
 }
 
 // Resolve returns a list of (mirror) locations for the given image reference.
@@ -96,9 +97,13 @@ func createTempRegistriesConf(config registries.Config) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer tmpFile.Close()
 
-	if err = convert.Write(rhRegistriesConf, tmpFile); err != nil {
+	defer func() {
+		_ = tmpFile.Close()
+	}()
+
+	err = convert.Write(rhRegistriesConf, tmpFile)
+	if err != nil {
 		_ = os.Remove(tmpFile.Name())
 
 		return "", err

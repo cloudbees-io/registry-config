@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -38,7 +39,10 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	defer resolver.Close()
+
+	defer func() {
+		_ = resolver.Close()
+	}()
 
 	locations, err := resolver.Resolve(args[0])
 	if err != nil {
@@ -48,7 +52,7 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 	output := strings.Join(locations, "\n")
 
 	if len(args) == 2 && args[1] != "-" {
-		err := writeToFile(args[1], []byte(output+"\n"))
+		err = writeToFile(args[1], []byte(output+"\n"))
 		if err != nil {
 			return fmt.Errorf("write registries.conf: %w", err)
 		}
@@ -56,13 +60,15 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 		return nil
 	}
 
-	fmt.Fprintln(stdout, output)
+	_, err = fmt.Fprintln(stdout, output)
 
-	return nil
+	return err
 }
 
 func writeToFile(path string, content []byte) (err error) {
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0640)
+	cleanPath := filepath.Clean(path)
+
+	file, err := os.OpenFile(cleanPath, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
 	if err != nil {
 		return err
 	}
