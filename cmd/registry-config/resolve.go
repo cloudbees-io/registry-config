@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -65,8 +66,8 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 }
 
 func writeToFile(path string, content []byte) (err error) {
-	// #nosec G304 -- path is validated by caller
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	cleanPath := filepath.Clean(path)
+	file, err := os.OpenFile(cleanPath, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
 	if err != nil {
 		return err
 	}

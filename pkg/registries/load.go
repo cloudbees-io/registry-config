@@ -6,12 +6,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
 // LoadConfig loads the registry mirror configuration file.
 func LoadConfig(file string) (Config, error) {
-	// #nosec G304 -- file path is provided by caller/config
-	raw, err := os.ReadFile(file)
+	cleanFile := filepath.Clean(file)
+	raw, err := os.ReadFile(cleanFile)
 	if err != nil {
 		return Config{}, fmt.Errorf("load registries config: %w", err)
 	}
