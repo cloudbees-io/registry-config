@@ -67,6 +67,7 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 
 func writeToFile(path string, content []byte) (err error) {
 	cleanPath := filepath.Clean(path)
+
 	file, err := os.OpenFile(cleanPath, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
 	if err != nil {
 		return err

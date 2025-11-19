@@ -12,6 +12,7 @@ import (
 // LoadConfig loads the registry mirror configuration file.
 func LoadConfig(file string) (Config, error) {
 	cleanFile := filepath.Clean(file)
+
 	raw, err := os.ReadFile(cleanFile)
 	if err != nil {
 		return Config{}, fmt.Errorf("load registries config: %w", err)
