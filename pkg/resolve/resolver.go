@@ -97,6 +97,7 @@ func createTempRegistriesConf(config registries.Config) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	defer func() {
 		_ = tmpFile.Close()
 	}()

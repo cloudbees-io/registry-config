@@ -1,3 +1,4 @@
+// Package main provides the registry-config command-line tool.
 package main
 
 import (

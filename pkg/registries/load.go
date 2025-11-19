@@ -10,6 +10,7 @@ import (
 
 // LoadConfig loads the registry mirror configuration file.
 func LoadConfig(file string) (Config, error) {
+	// #nosec G304 -- file path is provided by caller/config
 	raw, err := os.ReadFile(file)
 	if err != nil {
 		return Config{}, fmt.Errorf("load registries config: %w", err)

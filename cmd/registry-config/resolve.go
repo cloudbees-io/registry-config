@@ -38,6 +38,7 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+
 	defer func() {
 		_ = resolver.Close()
 	}()
@@ -50,7 +51,7 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 	output := strings.Join(locations, "\n")
 
 	if len(args) == 2 && args[1] != "-" {
-		err := writeToFile(args[1], []byte(output+"\n"))
+		err = writeToFile(args[1], []byte(output+"\n"))
 		if err != nil {
 			return fmt.Errorf("write registries.conf: %w", err)
 		}
@@ -64,6 +65,7 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 }
 
 func writeToFile(path string, content []byte) (err error) {
+	// #nosec G304 -- path is validated by caller
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
 	if err != nil {
 		return err
