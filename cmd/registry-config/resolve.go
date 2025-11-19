@@ -38,7 +38,9 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	defer resolver.Close()
+	defer func() {
+		_ = resolver.Close()
+	}()
 
 	locations, err := resolver.Resolve(args[0])
 	if err != nil {
@@ -56,13 +58,13 @@ func resolveImageReference(_ *cobra.Command, args []string) error {
 		return nil
 	}
 
-	fmt.Fprintln(stdout, output)
+	_, err = fmt.Fprintln(stdout, output)
 
-	return nil
+	return err
 }
 
 func writeToFile(path string, content []byte) (err error) {
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0640)
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
 	if err != nil {
 		return err
 	}

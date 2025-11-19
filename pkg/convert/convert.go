@@ -1,3 +1,4 @@
+// Package convert provides functions to convert registry configurations between formats.
 package convert
 
 import (

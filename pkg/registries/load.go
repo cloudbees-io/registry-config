@@ -1,3 +1,4 @@
+// Package registries provides functionality to load and manage registry configurations.
 package registries
 
 import (
@@ -14,7 +15,7 @@ func LoadConfig(file string) (Config, error) {
 		return Config{}, fmt.Errorf("load registries config: %w", err)
 	}
 
-	m := map[string]interface{}{}
+	m := map[string]any{}
 
 	err = json.Unmarshal(raw, &m)
 	if err != nil {

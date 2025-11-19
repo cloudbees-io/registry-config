@@ -34,7 +34,7 @@ func convertRegistriesConfig(_ *cobra.Command, args []string) (err error) {
 
 	rhConfig := convert.ToRegistriesConf(config)
 
-	outFile, err := os.OpenFile(args[0], os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0640)
+	outFile, err := os.OpenFile(args[0], os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
 	if err != nil {
 		return fmt.Errorf("write registries.conf: %w", err)
 	}
