@@ -1,7 +1,7 @@
 
 VERSION ?= dev
 
-GOLANGCI_LINT_VERSION := v2.6.2
+GOLANGCI_LINT_VERSION := v2.10.1
 
 
 all: cli
