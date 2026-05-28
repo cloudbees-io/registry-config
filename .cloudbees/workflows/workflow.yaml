@@ -37,7 +37,7 @@ jobs:
     - id: build-image
       name: Build, scan and push to ECR
       if: ${{ vars.workflow_execution_env == 'production' }}
-      uses: calculi-corp/cb-internal-shared-actions/build@v8
+      uses: calculi-corp/cb-internal-shared-actions/build/action@v8
       with:
         go-binary-build: "false"
         kaniko-build: "true"
