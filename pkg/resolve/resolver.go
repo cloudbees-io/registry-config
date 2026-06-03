@@ -106,6 +106,7 @@ func createTempRegistriesConf(config registries.Config) (string, error) {
 	if err != nil {
 		// G703: Safe - tmpFile.Name() comes from os.CreateTemp(), not user input
 		_ = os.Remove(tmpFile.Name())
+
 		return "", err
 	}
 
