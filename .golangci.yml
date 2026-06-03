@@ -8,7 +8,10 @@ output:
 
 linters:
   default: all
+  enable:
+    - wsl_v5
   disable:
+    - wsl
     - gochecknoglobals
     - wrapcheck
     - depguard
@@ -22,6 +25,10 @@ linters:
     - tagliatelle
   
   settings:
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
     cyclop:
       max-complexity: 15
     gosec:
