@@ -23,7 +23,7 @@ jobs:
     - id: build-image
       name: Build, scan and push to ECR
       if: ${{ vars.workflow_execution_env == 'production' }}
-      uses: calculi-corp/cb-internal-shared-actions/build/action@make-go-build-more-flexible
+      uses: calculi-corp/cb-internal-shared-actions/build/action@v8
       with:
         go-binary-build: "true"
         go-build-ldflags: "-X main.version=${{ cloudbees.version }}"
