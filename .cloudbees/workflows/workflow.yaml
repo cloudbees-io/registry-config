@@ -44,7 +44,8 @@ jobs:
         go-build-main: "./cmd/registry-config"
         go-binary-name: "registry-config"
         kaniko-build: "true"
-        run-unit-test: "false"
+        run-unit-test: "true"
+        golangci-lint: "true"
         registry-url: 020229604682.dkr.ecr.us-east-1.amazonaws.com
         registry-image-name: actions/registry-config
         registry-type: ECR
