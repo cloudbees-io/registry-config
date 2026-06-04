@@ -20,29 +20,18 @@ jobs:
       name: Get source code
       uses: cloudbees-io/checkout@v1
 
-    - id: unit-test
-      name: Unit tests
-      uses: docker://golang:1.26.2
-      run: |
-        go version
-        make test
-
-    - id: lint
-      name: Lint
-      uses: docker://golang:1.26.2
-      run: |
-        go version
-        make lint
-
     - id: build-image
       name: Build, scan and push to ECR
       if: ${{ vars.workflow_execution_env == 'production' }}
       uses: calculi-corp/cb-internal-shared-actions/build/action@v8
       with:
-        go-binary-build: "false"
+        go-binary-build: "true"
+        go-build-ldflags: "-X main.version=${{ cloudbees.version }}"
+        go-build-main: "./cmd/registry-config"
+        go-binary-name: "registry-config"
         kaniko-build: "true"
-        run-unit-test: "false"
-        build-args: VERSION=${{ cloudbees.version }}
+        run-unit-test: "true"
+        golangci-lint: "true"
         registry-url: 020229604682.dkr.ecr.us-east-1.amazonaws.com
         registry-image-name: actions/registry-config
         registry-type: ECR
