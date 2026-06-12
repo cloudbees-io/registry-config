@@ -3,7 +3,7 @@ module github.com/cloudbees-io/registry-config
 go 1.26.2
 
 require (
-	github.com/BurntSushi/toml v1.3.2
+	github.com/BurntSushi/toml v1.6.0
 	github.com/containers/image/v5 v5.31.1
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.11.1
