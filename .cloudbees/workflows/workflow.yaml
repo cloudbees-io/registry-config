@@ -36,3 +36,17 @@ jobs:
         registry-image-name: actions/registry-config
         registry-type: ECR
         oidc-iam-role: ${{ vars.oidc_staging_iam_role }}
+
+  create-upgrade-pr:
+    needs:
+      - build
+    if: ${{ cloudbees.scm.branch == 'main' }}
+    steps:
+      - uses: calculi-corp/platform-helmfiles/actions/set-component-version@main
+        with:
+          component: registry-config
+          artifact-key: public.actions.registry-config
+          artifact-value: ${{ cloudbees.version }}
+          app-id: ${{ vars.platform_helmfiles_app_id }}
+          installation-id: ${{ vars.platform_helmfiles_installation_id }}
+          private-key-b64: ${{ secrets.platform_helmfiles_gh_app_key_b64 }}
