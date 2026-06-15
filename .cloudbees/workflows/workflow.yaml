@@ -46,7 +46,7 @@ jobs:
         with:
           component: registry-config
           artifact-key: public.actions.registry-config
-          artifact-value: ${{ cloudbees.version }}
+          artifact-value: ${{ cloudbees.scm.sha }}
           app-id: ${{ vars.platform_helmfiles_app_id }}
           installation-id: ${{ vars.platform_helmfiles_installation_id }}
           private-key-b64: ${{ secrets.platform_helmfiles_gh_app_key_b64 }}
