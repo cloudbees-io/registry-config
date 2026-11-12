@@ -16,6 +16,7 @@ linters:
     - wrapcheck
     - depguard
     - exhaustruct
+    - exhaustruct_v5
     - gochecknoinits
     - godox
     - mnd
